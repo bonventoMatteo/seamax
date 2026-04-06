@@ -41,7 +41,7 @@ const aircraft = [
 ];
 
 export default function Fleet() {
-  const [visibleCards, setVisibleCards] = useState([]);
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -59,11 +59,14 @@ export default function Fleet() {
     return () => observer.disconnect();
   }, []);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
+
+    // No MouseEvent, clientX e clientY existem na raiz
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     const rotateX = (y - centerY) / 15;
@@ -72,13 +75,13 @@ export default function Fleet() {
     card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
   };
 
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     e.currentTarget.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
   };
 
   return (
     <section ref={sectionRef} className="py-32 bg-white relative overflow-hidden text-zinc-950">
-      
+
       {/* BACKGROUND EXECUTIVO SUTIL */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] opacity-40"></div>
@@ -86,7 +89,7 @@ export default function Fleet() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
+
         {/* HEADER MINIMALISTA */}
         <div className="mb-24 flex flex-col md:flex-row justify-between items-baseline gap-4 border-b border-zinc-100 pb-12">
           <div>
@@ -109,12 +112,11 @@ export default function Fleet() {
               key={plane.id}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className={`relative transition-all duration-1000 ease-out ${
-                visibleCards.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-              }`}
+              className={`relative transition-all duration-1000 ease-out ${visibleCards.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                }`}
             >
               <div className="relative bg-white border border-zinc-100 shadow-[0_10px_50px_rgba(0,0,0,0.04)] overflow-hidden group">
-                
+
                 {/* Image Display */}
                 <div className="relative h-64 overflow-hidden bg-zinc-100">
                   <img
@@ -123,7 +125,7 @@ export default function Fleet() {
                     className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-zinc-900/10 group-hover:bg-transparent transition-colors duration-500" />
-                  
+
                   {/* HUD Overlays (Light Version) */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
                     <div className="flex justify-between items-start">

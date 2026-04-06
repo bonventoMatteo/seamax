@@ -12,7 +12,7 @@ import Configure from '@/components/Configure'; // Importe o novo componente
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [isNight, setIsNight] = useState(false);
-  
+
   // 1. Estado para controlar se estamos no Home ou no Configurador
   const [view, setView] = useState<'home' | 'configure'>('home');
 
@@ -32,13 +32,13 @@ function App() {
 
   return (
     <div className={`min-h-screen transition-colors duration-1000 ${isNight ? 'bg-zinc-950' : 'bg-white'}`}>
-      
+
       {/* 2. Só mostramos a Navigation se estivermos na Home */}
       {view === 'home' && (
-        <Navigation 
-          scrolled={scrolled} 
-          isNight={isNight} 
-          setIsNight={setIsNight} 
+        <Navigation
+          scrolled={scrolled}
+          isNight={isNight}
+          setIsNight={setIsNight}
         />
       )}
 
@@ -46,21 +46,21 @@ function App() {
       {view === 'home' ? (
         <>
           {/* Passamos a função handleViewChange para o Hero abrir o configurador */}
-          <Hero 
-            isNight={isNight} 
-            onConfigure={() => handleViewChange('configure')} 
+          <Hero
+            isNight={isNight}
+            onConfigure={() => handleViewChange('configure')}
           />
-          
+
           <Fleet />
-          <Innovation />
-          <GlobalPresence />
-          <Contact />
+          <Innovation isNight={isNight} />
+          <GlobalPresence isNight={isNight} />
+          <Contact isNight={isNight} />
         </>
       ) : (
         /* 4. Tela de Configuração */
-        <Configure 
-          isNight={isNight} 
-          onBack={() => handleViewChange('home')} 
+        <Configure
+          isNight={isNight}
+          onBack={() => handleViewChange('home')}
         />
       )}
     </div>
