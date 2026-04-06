@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Zap, Shield, Cpu, Wind } from 'lucide-react';
 
 interface InnovationProps {
-  isNight: boolean;
+  isNight: boolean; // Adicione esta linha
+
 }
 
 const innovations = [
@@ -64,23 +65,23 @@ export default function Innovation({ isNight }: InnovationProps) {
   };
 
   return (
-    <section 
-      id="innovation" 
-      ref={sectionRef} 
+    <section
+      id="innovation"
+      ref={sectionRef}
       className={`py-24 lg:py-40 ${theme.bg} ${theme.text} relative overflow-hidden transition-colors duration-1000`}
     >
       {/* Background Decorativo Adaptativo */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className={`absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full blur-[120px] transition-all duration-1000 
-          ${isNight ? 'bg-blue-600/10 opacity-100' : 'bg-blue-400/5 opacity-50'}`} 
+          ${isNight ? 'bg-blue-600/10 opacity-100' : 'bg-blue-400/5 opacity-50'}`}
         />
         <div className={`absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full blur-[120px] transition-all duration-1000
-          ${isNight ? 'bg-zinc-500/10 opacity-100' : 'bg-zinc-300/10 opacity-50'}`} 
+          ${isNight ? 'bg-zinc-500/10 opacity-100' : 'bg-zinc-300/10 opacity-50'}`}
         />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-        
+
         {/* Header da Seção */}
         <div className="mb-20 lg:mb-32">
           <span className={`text-[10px] uppercase tracking-[0.6em] font-black mb-4 block transition-all duration-1000 text-blue-600 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
@@ -97,16 +98,15 @@ export default function Innovation({ isNight }: InnovationProps) {
           {innovations.map((item, index) => (
             <div
               key={item.title}
-              className={`group relative p-8 lg:p-12 transition-all duration-1000 ${theme.cardBg} ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              }`}
+              className={`group relative p-8 lg:p-12 transition-all duration-1000 ${theme.cardBg} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               {/* Efeito de Hover: Azul no Night / Preto no Day */}
               <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 
-                ${isNight ? 'bg-blue-600' : 'bg-zinc-900'}`} 
+                ${isNight ? 'bg-blue-600' : 'bg-zinc-900'}`}
               />
-              
+
               <div className="relative z-10 group-hover:text-white transition-colors duration-500">
                 <div className="mb-12">
                   <item.icon className="w-6 h-6 lg:w-8 lg:h-8 font-light stroke-[1px] group-hover:scale-110 transition-transform duration-500" />
@@ -132,7 +132,7 @@ export default function Innovation({ isNight }: InnovationProps) {
 
               {/* Linha Decorativa Inferior */}
               <div className={`absolute bottom-0 left-0 w-0 h-[2px] transition-all duration-700 delay-100 
-                ${isNight ? 'bg-white' : 'bg-blue-500'} group-hover:w-full`} 
+                ${isNight ? 'bg-white' : 'bg-blue-500'} group-hover:w-full`}
               />
             </div>
           ))}

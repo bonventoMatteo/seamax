@@ -7,13 +7,11 @@ import Innovation from '@/components/Innovation';
 import GlobalPresence from '@/components/GlobalPresence';
 import Contact from '@/components/Contact';
 import Navigation from '@/components/Navigation';
-import Configure from '@/components/Configure'; // Importe o novo componente
+import Configure from '@/components/Configure';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [isNight, setIsNight] = useState(false);
-
-  // 1. Estado para controlar se estamos no Home ou no Configurador
   const [view, setView] = useState<'home' | 'configure'>('home');
 
   useEffect(() => {
@@ -26,38 +24,40 @@ function App() {
 
   // Função para voltar ao topo e trocar de tela
   const handleViewChange = (newView: 'home' | 'configure') => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Reset de scroll para a nova "página"
+    window.scrollTo({ top: 0, behavior: 'instant' });
     setView(newView);
   };
 
   return (
     <div className={`min-h-screen transition-colors duration-1000 ${isNight ? 'bg-zinc-950' : 'bg-white'}`}>
 
-      {/* 2. Só mostramos a Navigation se estivermos na Home */}
-      {view === 'home' && (
-        <Navigation
-          scrolled={scrolled}
-          isNight={isNight}
-          setIsNight={setIsNight}
-        />
-      )}
+      {/* 1. Navegação fixa (opcional: pode sumir no configurador se desejar) */}
+      <Navigation
+        scrolled={scrolled}
+        isNight={isNight}
+        setIsNight={setIsNight}
+      />
 
-      {/* 3. Lógica Condicional de Telas */}
+      {/* 2. Lógica Condicional de Telas */}
       {view === 'home' ? (
-        <>
-          {/* Passamos a função handleViewChange para o Hero abrir o configurador */}
+        <main>
+          {/* O Hero precisa receber a função de mudança de view para o botão funcionar */}
           <Hero
             isNight={isNight}
             onConfigure={() => handleViewChange('configure')}
           />
 
-          <Fleet />
           <Innovation isNight={isNight} />
+          {/* Fleet também precisa do isNight para os cards e scrollbar */}
+          <Fleet isNight={isNight} />
+
           <GlobalPresence isNight={isNight} />
+
           <Contact isNight={isNight} />
-        </>
+        </main>
       ) : (
-        /* 4. Tela de Configuração */
+        /* 3. Tela de Configuração */
         <Configure
           isNight={isNight}
           onBack={() => handleViewChange('home')}
